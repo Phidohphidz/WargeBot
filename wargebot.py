@@ -4,7 +4,7 @@
 # Activate virtual environment
 
 # After that, then
-# Just pip install sentence-transformers scikit-learn, kivy
+# Just pip install sentence-transformers scikit-learn kivy
 
 
 # U can make your own dataset, that it's format should look like the dialogs.txt or the health_data in data.py
