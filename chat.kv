@@ -1,0 +1,61 @@
+<ChatBubble>:
+    size_hint: None, None
+    size: self.minimum_size
+    padding: 10
+    
+    # Set a fixed maximum width
+    max_width: 700  # You can adjust this value as needed
+    
+    pos_hint: {"right": 1} if root.is_user else {"x": 0}
+
+    canvas.before:
+        Color:
+            rgba: (0, 0.6, 1, 1) if root.is_user else (0.8, 0.8, 0.8, 1)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [10]
+
+    Label:
+        text: root.text
+        size_hint: None, None
+        
+        # Calculate size with max_width constraint
+        size: self.texture_size if self.texture_size[0] <= root.max_width else (root.max_width, self.texture_size[1] * (self.texture_size[0] / root.max_width + 1))
+        
+        # Enable text wrapping
+        text_size: root.max_width, None
+        halign: 'left'
+        valign: 'middle'
+        color: (1,1,1,1) if root.is_user else (0,0,0,1)
+
+<ChatScreen>:
+    orientation: 'vertical'
+
+    ScrollView:
+        id: scroll
+        do_scroll_x: False
+
+        BoxLayout:
+            id: chat_box
+            orientation: 'vertical'
+            size_hint_y: None
+            height: self.minimum_height
+            padding: 10
+            spacing: 10
+
+    BoxLayout:
+        size_hint_y: None
+        height: 50
+        spacing: 5
+        padding: 5
+
+        TextInput:
+            id: user_input
+            hint_text: "Type a message..."
+            multiline: False
+
+        Button:
+            text: "Send"
+            size_hint_x: 0.3
+            on_press: root.send_message()
