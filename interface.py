@@ -18,6 +18,8 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import StringProperty
 from wargebot import WargeBot
 from kivy.clock import Clock
+from kivy.core.window import Window
+from kivy.utils import get_color_from_hex
 
 class ChatBubble(BoxLayout):
     text = StringProperty("")
@@ -30,7 +32,15 @@ class ChatScreen(BoxLayout):
         self.bot = WargeBot()
         self.bot.load_dataset()
 
-        self.add_message("Hello, am WargeBot,  jakwsjdas aijsjcx ascnasc ascjas casicas casijjc ascaisc ascaisc ascaisca scodcnsc asdc I answer basic health questions, am still learning, so please go easy on me", False)
+        self.add_message("Hello, am WargeBot, I answer basic health questions, am still learning, so please go easy on me", False)
+        Window.bind(on_key_down=self.on_key_down)
+
+    def on_key_down(self, window, key, scancode, codepoint, modifiers):
+        # print(key)
+        if key == 13:  # Enter key
+            self.send_message()
+            return True
+        return False
 
     def send_message(self):
         user_text = self.ids.user_input.text.strip()
@@ -59,7 +69,8 @@ class ChatScreen(BoxLayout):
         self.index = 0
         Clock.schedule_interval(self.update_text, 0.03)
 
-        self.ids.scroll.scroll_y = 0
+        if self.ids.chat_box.height > self.ids.scroll.height: 
+            self.ids.scroll.scroll_y = 0
 
     def update_text(self, dt):
         if self.index < len(self.full_text):
@@ -74,6 +85,8 @@ class ChatApp(App):
     def build(self):
         self.title = "WargeBot"
         self.icon = "logoEdt.jpg"
+        
+        Window.clearcolor = get_color_from_hex("#111c25")
         return ChatScreen()
 
 
