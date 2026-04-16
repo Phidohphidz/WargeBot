@@ -7,7 +7,7 @@
 # Just pip install sentence-transformers scikit-learn, kivy
 
 
-# U can make your own dataset, that it's format should look like the dialogs.txt or the self.data variable
+# U can make your own dataset, that it's format should look like the dialogs.txt or the health_data in data.py
 # U can contact me 0981254727 on whatsApp if, U want to understand a little bit more.
 
 from sentence_transformers import SentenceTransformer
